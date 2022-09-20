@@ -16,14 +16,15 @@ function generateHtmlPlugins(templateDir) {
         return new HtmlPlugin({
             filename: `${name}.html`,
             template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-            inject: false,
+            inject: true,
         })
     })
 }
 
-const htmlPlugins = generateHtmlPlugins(`./src/html`);
+// const htmlPlugins = generateHtmlPlugins(`./src/html`);
 
 module.exports = {
+    target: `web`,
     mode: `development`,
     entry: [
         `./src/js/index.js`,
@@ -31,50 +32,44 @@ module.exports = {
         `./src/html/index.html`
     ],
     output: {
-        filename: `./js/bundle.js`,
         path: path.resolve(__dirname, `build`),
     },
-    target: `web`,
     devtool: `source-map`,
     devServer: {
         static: path.resolve(__dirname, `build`),
         open: true,
+        hot: true,
         port: 8080,
-        hot: true
     },
     module: {
         rules: [
             {
                 test: /\.(js)$/,
-                include: path.resolve(__dirname, `src/js`),
                 exclude: /(node_modules)/,
                 use: [
-                    {
-                        loader: `babel-loader`,
-                        options: {
-                            presets: [`@babel/preset-env`]
-                        }
-                    }
-                ]
+                    "babel-loader"
+                ],
             },
             {
                 test: /\.(css)$/,
                 include: path.resolve(__dirname, `src/css`),
                 use: [
                   MiniCssExtractPlugin.loader,
-                  "css-loader"
+                  {
+                    loader: "css-loader",
+                    options: { sourceMap: true }
+                  },
                 ],
             },
             {
                 test: /\.(html)$/,
                 include: path.resolve(__dirname, `src/html`),
-                use: [`raw-loader`]
+                use: [`html-loader`]
             }
 
         ]
     },
     optimization: {
-      minimize: true,
       minimizer: [
         new CssMinimizerPlugin(),
       ],
@@ -93,5 +88,5 @@ module.exports = {
           ],
         }),
         new MiniCssExtractPlugin()
-    ].concat(htmlPlugins)
+    ].concat( generateHtmlPlugins(`./src/html`))
 };
