@@ -18,11 +18,11 @@ function generateHtmlPlugins(templateDir) {
     }
 
     throughDirectory(templateDir);
-    
+
     return files.map((item) => {
       const parts = item.split(path.sep);
       const name = parts[parts.length - 1];
-      
+
       return new HtmlPlugin({
         filename: name,
         template: path.resolve(item),
@@ -74,7 +74,10 @@ module.exports = {
             {
                 test: /\.(html)$/,
                 include: path.resolve(__dirname, `src/html`),
-                use: [`html-loader`]
+                loader: "html-loader",
+                options: {
+                  sources: false,
+                },
             }
 
         ]
@@ -97,6 +100,9 @@ module.exports = {
             }
           ],
         }),
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin({
+          filename: '[name].css',
+          ignoreOrder: true
+        }),
     ].concat( generateHtmlPlugins(`./src/html`))
 };
