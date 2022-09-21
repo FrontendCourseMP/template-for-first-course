@@ -1,134 +1,121 @@
 # Project setup
 
-## Install Node.js and Node Package Manager (npm)
+## Установите Node.js
 
-### Why
+### Зачем?
 
-We'll use Node.js to bundle the project and NPM to install dependencies
+Мы будем использовать Node.js и интегрированный пакетный менеджер npm, чтобы собирать ваш проект и запускать его локально
 
-#### Linux
+#### Для пользователей Linux
 
-Usually there's package named `node` or `nodejs` in your distro repositories.
+Для установки на Linux воспользуйтесь терминалом и скачайте Node.js, который может называться как node, так и nodejs в зависимости от пакетного менеджера, используемого в вашем дистрибутиве.
 
-For detailed instructions please refer [official docs](https://nodejs.org/en/download/package-manager/)
+Для более детальных инструкций прочитайте [оффициальную документацию](https://nodejs.org/en/download/package-manager/)
 
-#### Mac OS
+#### Для пользователей Mac OS
 
-Download .pkg installer [here](https://nodejs.org/en/download/) _or_ use [Homebrew](https://brew.sh/):
+Скачайте установщик [здесь](https://nodejs.org/en/download/) _или_ воспользуйтесь [Homebrew](https://brew.sh/).
 
+Команда для Homebrew:
 `brew install node`
 
-#### Windows
+#### Для пользователей Windows
 
-Download latest LTS release [here](https://nodejs.org/en/download/)
+Скачайте последний LTS релиз [здесь](https://nodejs.org/en/download/)
 
 ![url=https://ibb.co/pQP3xLP](https://i.ibb.co/qCnRdrn/image.png)
 
-By default NPM will be installed among Node.js.
+Либо скачайте Node.js через пакетный менеджер Chocolatey.
 
-Tip: you can also [install](https://github.com/nvm-sh/nvm#install--update-script) [nvm](https://github.com/nvm-sh/nvm) to manage and use multiple versions of Node.js
+Команда для Chocolatey:
+`choco install nodejs-lts`
 
-## Setup IDE (Integrated Development Environment)
+## Установка VS Code
 
-To get the best experience while development. Usually includes features like syntax highlighting and code linting.
+Для упрощения работы и предотвращения несостыковок - в курсе будет использоваться VS code и будут описаны расширения к нему. Если вы планируете использовать любое другое IDE или текстовый редактор - вы делаете это на свой страх и риск, а потому должны давать себе отчет, что отлично в нем разбираетесь и в системе присутствуют все аналоги расширений.
 
-We recommend using Visual Studio Code (next just VSCode).
+#### Установка VS Code
 
-### Install VSCode
+Скачайте VS Code для вашей системы [здесь](https://code.visualstudio.com/)
 
-#### Any OS
+## Рекомендуемые расширения для VS Code
 
-You may download it [here](https://code.visualstudio.com/)
-
-#### Unix
-
-Via homebrew: `brew install --cask visual-studio-code`
-
-You may also find package `visual-studio-code` in your distro repositories.
-
-## Install recommended extensions for Visual Studio Code
-
-To install any of this, press Ctrl+P in VSCode window and paste command
+Чтобы установить расширения нажмите на последнюю кнопку в левом боковом меню. Данная кнопка выглядит как три кубика в форме буквы L и присоединяющийся к ним кубик.
 
 ### Stylint
 
-It will help you avoid errors and enforce conventions in your styles.
+Это расширение позволит иметь однообразный код и соблюдать конвенции, принятые на курсе.
 
-`ext install stylelint.vscode-stylelint`
+Чтобы найти его наберите в поиске:
+`stylelint.vscode-stylelint`
 
 ### Prettier
 
-This will keep you code formatting clean.
+Это расширение позволит вам иметь код в единообразном состоянии.
 
-`ext install esbenp.prettier-vscode`
+Чтобы найти его наберите в поиске:
+`esbenp.prettier-vscode`
 
 ### ESlint
 
-`ext install dbaeumer.vscode-eslint`
+Это расширение позволит поддерживать нормальное форматирование в вашем JS коде.
 
-## Install Git
+Чтобы найти его наберите в поиске:
+`dbaeumer.vscode-eslint`
 
-Git is system for controlling changes in project. It keeps history of all file changes.
+## Установите Git
 
-### Windows
+Гит это система контроля версий, которая позволит вам сохранять ваши изменения в файлах и отменять их, если что-то пойдет не так. Данная система используется в программировании давно и позволила спасти огромное количество проектов. Своего рода ctrl + z, но в больших масштабах.
 
-Download it [here](https://git-scm.com/download/windows)
+### Установка Git для Linux
 
-### Unix
+Откройте терминал и введите команду установки для вашего пакетного менеджера, пакет называется "git".
+Вполне возможно, что он уже установлен на вашей системе, чтобы проверить наберите команду:
+`git --version`
 
-You probably already have it installed. Check is it installed first. Try perform `git --version` in terminal.
+### Установка для Mac OS
 
-If it's not installed you may install package `git` with your package manager or refer instructions for [Mac OS](https://git-scm.com/download/mac)/[Linux](https://git-scm.com/download/linux)
+Откройте терминал и введите команду "git", система сама предложит вам установить инструменты разработчика. Просто согласитесь с их установкой.
 
-## Preparing for the development
+Также можно установить с [сайта](https://git-scm.com/), установщик выделен в синий монитор, он предложит вам скачать установщик, подходящий к вашей системе.
 
-Click `Use this template` at the top of the page to create project from the template
+### Установка Git для Windows
 
-### Open terminal
+Установите через Chocolatey следующей командой:
+`choco install git`
 
-Next you will need terminal
+Также можно установить с [сайта](https://git-scm.com/), установщик выделен в синий монитор, он предложит вам скачать установщик, подходящий к вашей системе.
+
+## Подготовка к разработке
+
+Скачайте репозиторий, предоставленный вам Московским Политехом. Для скачивания следует настроить git и сгенерировать ключ SSH, а также привязать его к аккунту. Если вам не удается это сделать, то свяжитесь с @DornRogal в Telegram для консультации и помощи (обращаться можно хоть в 1 a.m. хоть в 3 a.m. Вы получите ответ при первой освободившейся минуте).
 
 #### VSCode
 
-You may use terminal integrate to IDE. You may use Ctrl+` to show/hide terminal or Ctrl+shift+` to create new terminal.
+Если вы правильно установили VS code на Winodw, то нажав правую клавишу мыши вы сможете открыть папку в VS code.
+На Linux и Mac OS следует открыть VS Code и выбрать `file > open folder` после чего указать свою папку.
 
-#### Windows
+После выполнения этих операций ваш репозиторий откроется в VS Code как проект.
 
-You may use program named `cmd` (command prompt) or `powershell`
+#### Терминал
 
-#### Unix
+Используйте любой терминал, который вам нравится. Для Windows рекомендуется использовать либо powershell, либо Windows Terminal, который можно скачать в Windows Store.
+Также вы можете использовать терминал, предоставляемый в VS Code, но это может вызывать небольшие баги. Чтобы открыть его нажмите сочетание клавиш `ctrl + ~`. Далее мы будем использовать его для упрощения гайда.
+На Mac OS терминал можно открыть через `view terminal`. Комбинация клавиш может иногда не сработать.
 
-Use your favorite terminal app :)
+#### Установка
 
-### Clone the repository
+Для установки зависимостей введите в терминале `npm ci`.
 
-Copy link from your Git repository
+## Проверьте работу сервера для разработки
 
-Use command `git clone LINK` in the directory where you want your project to be.
+Запустите сервер с помощью команды `npm run start`. Откроется ваш браузер с пустым окном.
+Чтобы проверить, что все работает корректно - напишите что-нибудь в index.html, расположенном в папке src.
 
-### Install dependencies
+## Проверьте работу сборки
 
-#### Cd into the repository
+Начните сборку с помощью команды `npm run build`. У вас должна появиться новая папка build, в которую будет все сложено.
 
-Use command `cd` to Change Directory (move to the directory)
-`cd DIRECTORY`
+## Тестирование
 
-e.g. `cd template-for-first-course`
-
-#### Install dependencies itself
-
-Use command `npm ci` (clean install) to install dependencies
-
-## Run development server
-
-Use command `npm run start` to start the development.
-It will update your page and it's assets on any changes.
-
-## Before building
-
-You should check your code with `npm run test` and fix errors if there's any.
-
-## Build production ready bundle
-
-`npm run build`
-It will create optimized bundle in `./build` directory which you can deploy to the server.
+Протестируйте на ошибки свой код с помощью команды `npm run test`. У вас должны пройти тесты и быть все зеленым. Если же у вас тесты не обозначены зеленым, то стоит исправить ошибки.ыs
