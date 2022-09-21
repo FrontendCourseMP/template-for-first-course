@@ -2,7 +2,6 @@ const path = require(`path`);
 const fs = require(`fs`);
 const HtmlPlugin = require(`html-webpack-plugin`);
 const CopyPlugin = require(`copy-webpack-plugin`);
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 function generateHtmlPlugins(templateDir) {
@@ -31,15 +30,27 @@ function generateHtmlPlugins(templateDir) {
     })
 }
 
-// const htmlPlugins = generateHtmlPlugins(`./src/html`);
+function throughCSSDirectory(directory) {
+  const cssTempfiles = [];
+
+  fs.readdirSync(directory).forEach((file) => {
+    const absolute = path.join(directory, file);
+
+    if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
+    return cssTempfiles.push(`./${absolute.replace(/\\/g, '/')}`);
+  });
+
+  return cssTempfiles;
+}
+const cssFiles = throughCSSDirectory('./src/css');
 
 module.exports = {
     target: `web`,
     mode: `development`,
     entry: [
         `./src/js/index.js`,
-        `./src/css/style.css`,
-        `./src/html/index.html`
+        `./src/html/index.html`,
+        ...cssFiles
     ],
     output: {
         path: path.resolve(__dirname, `build`),
