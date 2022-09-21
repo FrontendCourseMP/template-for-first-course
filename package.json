@@ -9,7 +9,6 @@
         "build": "webpack --mode production",
         "start": "webpack-dev-server --progress --hot"
     },
-    "prettier": "prettier-airbnb-config",
     "husky": {
         "hooks": {
             "pre-commit": "prettier --write . && git add -A ."
