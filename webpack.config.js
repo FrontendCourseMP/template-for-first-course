@@ -6,18 +6,28 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 function generateHtmlPlugins(templateDir) {
-    const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
+    const files  = [];
 
-    return templateFiles.map((item) => {
-        const parts = item.split(`.`);
-        const name = parts[0];
-        const extension = parts[1];
+    function throughDirectory(directory) {
+      fs.readdirSync(directory).forEach((file) => {
+        const absolute = path.join(directory, file);
 
-        return new HtmlPlugin({
-            filename: `${name}.html`,
-            template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-            inject: true,
-        })
+        if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
+        else return files.push(absolute);
+      });
+    }
+
+    throughDirectory(templateDir);
+    
+    return files.map((item) => {
+      const parts = item.split(path.sep);
+      const name = parts[parts.length - 1];
+      
+      return new HtmlPlugin({
+        filename: name,
+        template: path.resolve(item),
+        inject: true,
+      })
     })
 }
 
