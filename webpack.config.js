@@ -51,37 +51,6 @@ module.exports = {
         hot: true,
         port: 8080,
     },
-    module: {
-        rules: [
-            {
-                test: /\.(js)$/,
-                exclude: /(node_modules)/,
-                use: [
-                    "babel-loader"
-                ],
-            },
-            {
-                test: /\.(css)$/,
-                include: path.resolve(__dirname, `src/css`),
-                use: [
-                  MiniCssExtractPlugin.loader,
-                  {
-                    loader: "css-loader",
-                    options: { sourceMap: true }
-                  },
-                ],
-            },
-            {
-                test: /\.(html)$/,
-                include: path.resolve(__dirname, `src/html`),
-                loader: "html-loader",
-                options: {
-                  sources: false,
-                },
-            }
-
-        ]
-    },
     optimization: {
       minimizer: [
         new CssMinimizerPlugin(),
@@ -97,12 +66,51 @@ module.exports = {
             {
               from: path.resolve(__dirname, `src/img`),
               to: path.resolve(__dirname, `build/img/`),
+            },
+            {
+              from: path.resolve(__dirname, `src/css`),
+              to: path.resolve(__dirname, `build/css`)
             }
           ],
         }),
-        new MiniCssExtractPlugin({
-          filename: '[name].css',
-          ignoreOrder: true
-        }),
-    ].concat( generateHtmlPlugins(`./src/html`))
+    ].concat( generateHtmlPlugins(`./src/html`)),
+    module: {
+      rules: [
+          {
+              test: /\.(js)$/,
+              exclude: /(node_modules)/,
+              use: [
+                  "babel-loader"
+              ],
+          },
+          {
+              test: /\.(css)$/,
+              include: path.resolve(__dirname, `src/css`),
+              use: [
+                {
+                  loader: "css-loader",
+                  options: { sourceMap: true }
+                },
+              ],
+          },
+          {
+              test: /\.(html)$/,
+              include: path.resolve(__dirname, `src/html`),
+              loader: "html-loader",
+              options: {
+                sources: false,
+              },
+          },
+          {
+            test: /.html$/,
+            loader: 'string-replace-loader',
+            options: {
+              search: '<link rel="stylesheet" href="../css',
+              replace: '<link rel="stylesheet" href="./css',
+              flags: 'g'
+            }
+          }
+
+      ]
+  },
 };
