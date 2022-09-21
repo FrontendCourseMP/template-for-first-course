@@ -19,9 +19,9 @@ function generateHtmlPlugins(templateDir) {
 
     throughDirectory(templateDir);
     
-    return files.map((item)=>{
+    return files.map((item) => {
       const parts = item.split(path.sep);
-      const name = parts[parts.length -1 ];
+      const name = parts[parts.length - 1];
       
       return new HtmlPlugin({
         filename: name,
