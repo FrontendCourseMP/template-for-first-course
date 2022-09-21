@@ -8,9 +8,9 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 function generateHtmlPlugins(templateDir) {
     const files  = [];
 
-    function throughDirectory(Directory) {
-      fs.readdirSync(Directory).forEach(File => {
-        const absolute = path.join(Directory, File);
+    function throughDirectory(directory) {
+      fs.readdirSync(directory).forEach((file) => {
+        const absolute = path.join(directory, file);
 
         if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
         else return files.push(absolute);
