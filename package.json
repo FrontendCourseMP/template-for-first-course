@@ -28,7 +28,7 @@
       "src/**/*.js": [
         "npm run eslint:fix"
       ],
-      "src/**/*.scss": [
+      "src/**/*.css": [
         "npm run stylelint:fix"
       ],
       "src/**/*.html": [
