@@ -26,10 +26,10 @@
     },
     "lint-staged": {
       "src/**/*.js": [
-        "npm run eslint:fix"
+        "npm run eslint"
       ],
       "src/**/*.css": [
-        "npm run stylelint:fix"
+        "npm run stylelint"
       ],
       "src/**/*.html": [
         "npm run htmlhint"
