@@ -11,7 +11,7 @@
         "prepare": "husky install",
         "prettier": "prettier --write src/**/*.{scss,html}",
         "htmlhint": "htmlhint src/**/*.html",
-        "stylelint": "stylelint src/scss",
+        "stylelint": "stylelint src/css",
         "stylelint:fix": "npm run stylelint -- --fix",
         "eslint": "eslint src/js/**/*.js",
         "eslint:fix": "npm run eslint -- --fix",
