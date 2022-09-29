@@ -8,12 +8,32 @@
         "test": "npx eslint . --ext .js",
         "build": "webpack --mode production",
         "start": "webpack-dev-server --progress --hot",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "prettier": "prettier --write src/**/*.{scss,html}",
+        "htmlhint": "htmlhint src/**/*.html",
+        "stylelint": "stylelint src/scss",
+        "stylelint:fix": "npm run stylelint -- --fix",
+        "eslint": "eslint src/js/**/*.js",
+        "eslint:fix": "npm run eslint -- --fix",
+        "fix": "npm run eslint:fix && npm run prettier && npm run stylelint:fix",
+        "lint": "npm run eslint && npm run htmlhint && npm run stylelint"
     },
     "husky": {
         "hooks": {
-            "pre-commit": "prettier --write . && git add -A ."
+          "pre-commit": "lint-staged",
+          "pre-push": "npm run lint"
         }
+    },
+    "lint-staged": {
+      "src/**/*.js": [
+        "npm run eslint:fix"
+      ],
+      "src/**/*.scss": [
+        "npm run stylelint:fix"
+      ],
+      "src/**/*.html": [
+        "npm run htmlhint"
+      ]
     },
     "devDependencies": {
         "@babel/preset-env": "7.19.1",
@@ -27,6 +47,7 @@
         "eslint-plugin-import": "^2.26.0",
         "html-loader": "4.1.0",
         "html-webpack-plugin": "5.5.0",
+        "htmlhint": "^1.1.4",
         "husky": "^8.0.0",
         "mini-css-extract-plugin": "2.6.1",
         "pre-commit": "^1.2.2",
