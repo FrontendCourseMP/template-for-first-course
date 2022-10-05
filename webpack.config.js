@@ -4,31 +4,35 @@ const HtmlPlugin = require(`html-webpack-plugin`);
 const CopyPlugin = require(`copy-webpack-plugin`);
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-function scanDirectory(directory) {
-  const tempfiles = [];
+const files  = [];
 
+function throughDirectory(directory) {
   fs.readdirSync(directory).forEach((file) => {
     const absolute = path.join(directory, file);
 
     if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
-    return tempfiles.push(`./${absolute.replace(/\\/g, '/')}`);
+    else return files.push(absolute);
+  });
+}
+
+function scanDirectory(directory) {
+  const tempfiles = [];
+
+  fs.readdirSync(directory).forEach((file) => {
+    const extension = file.split(".");
+
+    if (extension[extension.length - 1] === "js" || extension[extension.length - 1] === "html" || extension[extension.length - 1] === "css") {
+      const absolute = path.join(directory, file);
+
+      if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
+      return tempfiles.push(`./${absolute.replace(/\\/g, '/')}`);
+    }
   });
 
   return tempfiles;
 }
 
 function generateHtmlPlugins(templateDir) {
-    const files  = [];
-
-    function throughDirectory(directory) {
-      fs.readdirSync(directory).forEach((file) => {
-        const absolute = path.join(directory, file);
-
-        if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
-        else return files.push(absolute);
-      });
-    }
-
     throughDirectory(templateDir);
 
     return files.map((item) => {
@@ -64,6 +68,11 @@ module.exports = {
         open: true,
         hot: true,
         port: 8080,
+    },
+    performance: {
+      hints: false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000
     },
     optimization: {
       minimizer: [
@@ -119,9 +128,18 @@ module.exports = {
             test: /.html$/,
             loader: 'string-replace-loader',
             options: {
-              search: '<link rel="stylesheet" href="../css',
-              replace: '<link rel="stylesheet" href="./css',
-              flags: 'g'
+              multiple: [
+                {
+                  search: '<link rel="stylesheet" href="../css',
+                  replace: '<link rel="stylesheet" href="./css',
+                  flags: 'g'
+                },
+                {
+                  search: '../img',
+                  replace: './img',
+                  flags: 'g'
+                }
+              ]
             }
           }
 
