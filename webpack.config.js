@@ -7,12 +7,14 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const files  = [];
 
 function throughDirectory(directory) {
-  fs.readdirSync(directory).forEach((file) => {
+  const directoryContents = fs.readdirSync(directory);
+  directoryContents.forEach((file) => {
     const absolute = path.join(directory, file);
-
     if (fs.statSync(absolute).isDirectory()) return throughDirectory(absolute);
     else return files.push(absolute);
   });
+
+  return files;
 }
 
 function scanDirectory(directory) {
@@ -33,18 +35,17 @@ function scanDirectory(directory) {
 }
 
 function generateHtmlPlugins(templateDir) {
-    throughDirectory(templateDir);
+  const htmlFiles = throughDirectory(templateDir);
+  return htmlFiles.map((item) => {
+    const parts = item.split(path.sep);
+    const name = parts[parts.length - 1];
 
-    return files.map((item) => {
-      const parts = item.split(path.sep);
-      const name = parts[parts.length - 1];
-
-      return new HtmlPlugin({
-        filename: name,
-        template: path.resolve(item),
-        inject: true,
-      })
+    return new HtmlPlugin({
+      filename: name,
+      template: path.resolve(item),
+      inject: true,
     })
+  })
 }
 
 const cssFiles = scanDirectory('./src/css');
